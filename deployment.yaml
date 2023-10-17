@@ -1,11 +1,13 @@
 ## Vamos da api que estamos utilizando.
 ## Devemos sempre passar os recursos que queremos usar.
+# Deployment do web page
 apiVersion: apps/v1
 kind: Deployment
 metadata:
    name: web-page
 ## Tera toda a especificação do objeto.  
 spec:
+  replicas: 5
   selector:
     matchLabels:
       app: meudeployment
@@ -21,3 +23,18 @@ spec:
          image: fabricioveronez/web-page:blue
          ports: 
           - containerPort: 80
+---
+# Server do webpage
+apiVersion: v1
+kind: Service
+metadata:
+ name: web-page
+spec:
+  selector:
+   app: meudeployment
+  ports:
+   - protocol: TCP
+     port: 80
+     name: http
+     nodePort: 30000
+  type: NodePort
