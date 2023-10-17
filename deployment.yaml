@@ -1,0 +1,23 @@
+## Vamos da api que estamos utilizando.
+## Devemos sempre passar os recursos que queremos usar.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: web-page
+## Tera toda a especificação do objeto.  
+spec:
+  selector:
+    matchLabels:
+      app: meudeployment
+  template: 
+   metadata:
+    ## O nome será criado automáticamente pelo replica set.
+    ## O label do template precisa bater com selector.
+     labels:
+      app: meudeployment
+   spec:
+     containers:
+       - name: web
+         image: fabricioveronez/web-page:blue
+         ports: 
+          - containerPort: 80
